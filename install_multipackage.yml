@@ -1,21 +1,24 @@
 ---
-- hosts: webservers
+- hosts: Webserver
   become: true
   tasks:
-  - name:Installation of packages on RedHat family
-  when : ansible_os_family == "RedHat"
-    yum: path={{item}} state=present
-    with_items:
-    - vim
-    - zip
-    - curl
-    - nginx
+    - name: Installation of packages on RedHat family
+      when: ansible_os_family == "RedHat"
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - vim
+        - zip
+        - nginx
 
-     - name:Installation of packages on Debaian family
-  when : ansible_os_family == "Debain"
-    apt: path={{item}} state=present
-    with_items:
-    - vim
-    - zip
-    - curl
-    - nginx
+    - name: Installation of packages on Debian family
+      when: ansible_os_family == "Debian"
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - vim
+        - zip
+        - curl
+        - nginx
